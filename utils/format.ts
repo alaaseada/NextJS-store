@@ -5,7 +5,7 @@ export const formatCurrency = (value: number | null) => {
     currency: 'USD',
     currencySign: 'standard',
     currencyDisplay: 'symbol',
-    maximumFractionDigits: 0,
+    maximumFractionDigits: 2,
   })
   return formatter.format(price)
 }
