@@ -1,11 +1,11 @@
-import { products } from '@prisma/client/edge'
+import { Product } from '@prisma/client/edge'
 import { Card, CardContent } from '@/components/ui/card'
 import Image from 'next/image'
 import FavoriteToggleButton from './FavoriteToggleButton'
 import { formatCurrency } from '@/utils/format'
 import Link from 'next/link'
 
-const ProductsList = ({ products }: { products: products[] }) => {
+const ProductsList = ({ products }: { products: Product[] }) => {
   return (
     <div className="grid gap-8 mt-12">
       {products.map((product) => {
@@ -40,10 +40,7 @@ const ProductsList = ({ products }: { products: products[] }) => {
                 </CardContent>
               </Card>
             </Link>
-            <FavoriteToggleButton
-              productId={id}
-              className="absolute top-6 right-6"
-            />
+            <FavoriteToggleButton productId={id} />
           </div>
         )
       })}
