@@ -4,7 +4,7 @@ const prisma = new PrismaClient()
 
 async function main() {
   for (const product of products) {
-    await prisma.products.create({
+    await prisma.product.create({
       data: product,
     })
   }

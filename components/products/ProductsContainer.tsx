@@ -1,4 +1,7 @@
-import { fetchAllProducts } from '@/utils/actions'
+import {
+  fetchAllProducts,
+  getTotalNumberOfFilteredProducts,
+} from '@/utils/actions'
 import ProductsGrid from './ProductsGrid'
 import ProductsList from './ProductsList'
 import EmptyList from '../global/EmptyList'
@@ -6,18 +9,24 @@ import { Separator } from '../ui/separator'
 import { Grid2X2CheckIcon, ListChecksIcon } from 'lucide-react'
 import { Button } from '../ui/button'
 import Link from 'next/link'
+import Pager from '../global/Pager'
 
 type ProductsContainerProps = {
   layout: string
   searchKey: string
+  page: number
 }
 
 const ProductsContainer = async ({
   layout,
   searchKey,
+  page,
 }: ProductsContainerProps) => {
-  const products = await fetchAllProducts(searchKey)
-  const products_count = products.length
+  const products = await fetchAllProducts(searchKey, page)
+  const products_count = await getTotalNumberOfFilteredProducts(searchKey)
+
+  const totalPages = Math.ceil(products_count / 6)
+
   const searchTerm = searchKey ? `&searchKey=${searchKey}` : ''
   return (
     <>
@@ -42,11 +51,20 @@ const ProductsContainer = async ({
         <Separator />
       </section>
       {products_count ? (
-        layout === 'grid' ? (
-          <ProductsGrid products={products} />
-        ) : (
-          <ProductsList products={products} />
-        )
+        <>
+          {layout === 'grid' ? (
+            <ProductsGrid products={products} />
+          ) : (
+            <ProductsList products={products} />
+          )}
+          {totalPages > 1 && (
+            <Pager
+              className="mt-6"
+              totalPages={totalPages}
+              currentPage={page}
+            />
+          )}
+        </>
       ) : (
         <EmptyList
           heading="Sorry, No items found that match your search"

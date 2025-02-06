@@ -7,21 +7,18 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import UserIcon from './UserIcon'
 import SignoutLink from './SignoutLink'
-import {
-  SignedIn,
-  SignedOut,
-  SignInButton,
-  SignUp,
-  SignUpButton,
-} from '@clerk/nextjs'
+import { SignedIn, SignedOut, SignInButton, SignUpButton } from '@clerk/nextjs'
+import { auth } from '@clerk/nextjs/server'
 
-const LinksDropDown = () => {
+const LinksDropDown = async () => {
+  const { userId } = await auth()
+  const isAdmin = userId && process.env.ADMIN_USER_IDS?.includes(userId)
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -46,6 +43,7 @@ const LinksDropDown = () => {
         <SignedIn>
           {Links.map((link) => {
             const { id, href, label } = link
+            if (!isAdmin && label.toLowerCase() === 'dashboard') return null
             return (
               <DropdownMenuItem key={id}>
                 <Link href={href} className="capitalize w-full">

@@ -1,24 +1,23 @@
-import { products } from '@prisma/client/edge'
+import { Product } from '@prisma/client/edge'
 import { Card, CardContent } from '../ui/card'
 import { formatCurrency } from '@/utils/format'
 import Link from 'next/link'
 import Image from 'next/image'
 import FavoriteToggleButton from './FavoriteToggleButton'
 
-const ProductsGrid = ({ products }: { products: products[] }) => {
+const ProductsGrid = ({ products }: { products: Product[] }) => {
   return (
     <div className="pt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
       {products.map((product) => {
         const { id, name, price, company, image } = product
-        const price_dollar = formatCurrency(price)
-
         return (
           <article key={id} className="group relative">
             <Link href={`/products/${id}`}>
-              <Card className="transform group-hover:shadow-xl transition-shadow duration-500">
+              <Card className="min-h-80 transform group-hover:shadow-xl transition-shadow duration-500">
                 <CardContent className="p-4">
                   <div className="relative overflow-hidden">
                     <Image
+                      priority
                       src={image}
                       alt={name}
                       sizes="fill"
@@ -39,10 +38,7 @@ const ProductsGrid = ({ products }: { products: products[] }) => {
                 </CardContent>
               </Card>
             </Link>
-            <FavoriteToggleButton
-              className="absolute right-6 top-6"
-              productId={id}
-            />
+            <FavoriteToggleButton productId={id} />
           </article>
         )
       })}

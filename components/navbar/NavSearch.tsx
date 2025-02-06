@@ -15,6 +15,7 @@ const NavSearch = () => {
     const params = new URLSearchParams(searchParams)
     if (value) {
       params.set('searchKey', value)
+      if (params.get('page')) params.delete('page')
     } else {
       params.delete('searchKey')
     }
