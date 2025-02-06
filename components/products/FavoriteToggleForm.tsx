@@ -7,9 +7,14 @@ import { usePathname } from 'next/navigation'
 type FavoriteToggleFormProps = {
   favId: string | null
   productId: string
+  className?: string
 }
 
-const FavoriteToggleForm = ({ favId, productId }: FavoriteToggleFormProps) => {
+const FavoriteToggleForm = ({
+  favId,
+  productId,
+  className,
+}: FavoriteToggleFormProps) => {
   const pathName = usePathname()
   const toggleFavoriteActionBinded = toggleFavoriteAction.bind(null, {
     favId,
@@ -19,7 +24,10 @@ const FavoriteToggleForm = ({ favId, productId }: FavoriteToggleFormProps) => {
 
   return (
     <FormContainer action={toggleFavoriteActionBinded}>
-      <CardSubmitButton isFavorite={favId ? true : false} />
+      <CardSubmitButton
+        isFavorite={favId ? true : false}
+        className={className}
+      />
     </FormContainer>
   )
 }

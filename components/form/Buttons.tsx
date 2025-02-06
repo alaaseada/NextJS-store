@@ -123,7 +123,7 @@ export const CardSignInButton = ({ className }: { className?: string }) => {
         type="button"
         size={'icon'}
         variant={'outline'}
-        className="p-2 cursor-pointer absolute right-6 top-6"
+        className={cn('p-2 cursor-pointer absolute', className)}
       >
         <FaRegHeart />
       </Button>
@@ -144,7 +144,7 @@ export const CardSubmitButton = ({
       type="submit"
       size={'icon'}
       variant={'outline'}
-      className="p-2 cursor-pointer absolute right-6 top-6"
+      className={cn('p-2 cursor-pointer', className)}
       disabled={pending}
     >
       {pending ? (
