@@ -3,7 +3,6 @@ import { CartItemsList, CartTotals } from '@/components/cart'
 import SectionTitle from '@/components/global/SectionTitle'
 import { auth } from '@clerk/nextjs/server'
 import { redirect } from 'next/navigation'
-import { CartItem } from '@/utils/types_schemas'
 import EmptyCart from '@/components/cart/EmptyCart'
 
 const CartPage = async () => {
