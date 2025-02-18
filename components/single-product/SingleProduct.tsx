@@ -39,7 +39,7 @@ const SingleProduct = async ({ productId }: { productId: string }) => {
             {formatCurrency(price)}
           </p>
           <p className="text-slate-700 text-justify leading-8">{description}</p>
-          <AddToCart productId={id} price={price} />
+          <AddToCart productId={id} />
         </div>
       </article>
       <ProductReviewsContainer productId={id} />
