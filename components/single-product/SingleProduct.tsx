@@ -5,29 +5,33 @@ import ProductRating from './ProductRating'
 import AddToCart from './AddToCart'
 import FavoriteToggleButton from '../products/FavoriteToggleButton'
 import { getProductById } from '@/utils/actions'
+import SharePopOver from './SharePopOver'
+import ProductReviewsContainer from '../reviews/ProductReviewsContainer'
 
 const SingleProduct = async ({ productId }: { productId: string }) => {
-  const { id, name, description, company, image, price } = await getProductById(
-    productId
-  )
+  const product = await getProductById(productId)
+  const { id, name, description, company, image, price } = product
   return (
     <div>
       <Breadcrumbs current_page={name} />
       <article className="mt-6 gap-y-8 grid lg:grid-cols-2 lg:gap-x-16">
-        <div className="h-full relative">
+        <div className="w-64 h-64 md:h-full md:w-full relative">
           <Image
             src={image}
             sizes="(max-width:768px) 100vw, (max-width:1200px) 50vw, 33vw"
             fill
             priority
             alt={name}
-            className="rounded-md object-cover"
+            className="w-full h-full rounded-md object-cover"
           />
         </div>
         <div>
           <div className="flex gap-4 items-center mb-1">
             <h2 className="uppercase font-bold text-xl">{name}</h2>
-            <FavoriteToggleButton productId={id} />
+            <div className="flex gap-2">
+              <FavoriteToggleButton productId={id} />
+              <SharePopOver productId={id} name={name} />
+            </div>
           </div>
           <ProductRating productId={id} />
           <h4 className="capitalize tracking-wider mb-4 text-lg">{company}</h4>
@@ -35,9 +39,10 @@ const SingleProduct = async ({ productId }: { productId: string }) => {
             {formatCurrency(price)}
           </p>
           <p className="text-slate-700 text-justify leading-8">{description}</p>
-          <AddToCart productId={id} />
+          <AddToCart productId={id} price={price} />
         </div>
       </article>
+      <ProductReviewsContainer productId={id} />
     </div>
   )
 }

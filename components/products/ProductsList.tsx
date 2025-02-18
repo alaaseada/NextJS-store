@@ -7,9 +7,9 @@ import Link from 'next/link'
 
 const ProductsList = ({ products }: { products: Product[] }) => {
   return (
-    <div className="grid gap-8 mt-12">
+    <div className="grid gap-4 mt-8">
       {products.map((product) => {
-        const { id, name, price, company, image } = product
+        const { id, name, price, description, company, image } = product
         return (
           <div key={id} className="relative group">
             <Link href={`/products/${id}`}>
@@ -18,7 +18,7 @@ const ProductsList = ({ products }: { products: Product[] }) => {
                 className="transform group-hover:shadow-md transition-shadow duration-500"
               >
                 <CardContent className="p-4 flex flex-col gap-4 md:flex-row">
-                  <div className="relative overflow-hidden h-64 md:h-48 md:w-48">
+                  <div className="relative overflow-hidden h-64 md:h-32 md:w-48">
                     <Image
                       alt={name}
                       src={image}
@@ -30,8 +30,8 @@ const ProductsList = ({ products }: { products: Product[] }) => {
                   </div>
                   <div className="flex flex-row justify-between md:flex-col md:justify-normal">
                     <div>
-                      <h2 className="text-2xl capitalize">{name}</h2>
-                      <h4 className="text-muted-foreground text-lg tracking-wider">
+                      <h2 className="text-lg capitalize">{name}</h2>
+                      <h4 className="text-muted-foreground text-sm tracking-wider">
                         {company}
                       </h4>
                     </div>

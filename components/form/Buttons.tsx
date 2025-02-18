@@ -9,7 +9,8 @@ import { FaRegHeart, FaHeart } from 'react-icons/fa'
 import { FaPencil, FaTrash } from 'react-icons/fa6'
 import Link from 'next/link'
 import FormContainer from './FormContainer'
-import { deleteProduct } from '@/utils/actions'
+import { actionFunction } from '@/utils/types_schemas'
+import { Spinner } from '../ui/spinner'
 
 type btnSize = 'default' | 'lg' | 'sm'
 
@@ -45,34 +46,6 @@ export function SubmitButton({
   )
 }
 
-type ActionType = 'edit' | 'delete'
-
-export const ActionButton = ({ actionType }: { actionType: ActionType }) => {
-  const { pending } = useFormStatus()
-
-  const renderIcon = () => {
-    switch (actionType) {
-      case 'edit':
-        return <FaPencil />
-      case 'delete':
-        return <FaTrash />
-      default:
-        const never: never = actionType
-        throw new Error(`Action ${never} is invalid`)
-    }
-  }
-  return (
-    <Button type="submit" size={'icon'} variant={'ghost'} disabled={pending}>
-      {pending ? (
-        <>
-          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-        </>
-      ) : (
-        renderIcon()
-      )}
-    </Button>
-  )
-}
 export const EditButton = ({
   id,
   className,
@@ -94,25 +67,38 @@ export const EditButton = ({
   )
 }
 
-export const DeleteButton = ({
+export const DeleteForm = ({
+  action,
   id,
   className,
+  children,
 }: {
+  action: actionFunction
   id: string
   className?: string
+  children: React.ReactNode
 }) => {
+  const actionFn = action.bind(null, { id })
+  return <FormContainer action={actionFn}>{children}</FormContainer>
+}
+
+export const DeleteButton = ({ className }: { className?: string }) => {
+  const { pending } = useFormStatus()
+
   return (
-    <FormContainer action={deleteProduct}>
-      <input type="hidden" name="id" value={id} />
-      <Button
-        type="submit"
-        size={'icon'}
-        variant={'ghost'}
-        className={cn('w-3 h-3', className)}
-      >
+    <Button
+      type="submit"
+      size={'icon'}
+      variant={'ghost'}
+      className={cn('w-3 h-3', className)}
+      disabled={pending}
+    >
+      {pending ? (
+        <Spinner size={'small'} className="text-primary"></Spinner>
+      ) : (
         <FaTrash className="text-primary" />
-      </Button>
-    </FormContainer>
+      )}
+    </Button>
   )
 }
 
@@ -150,10 +136,20 @@ export const CardSubmitButton = ({
       {pending ? (
         <Loader2 className="h-4 w-4 animate-spin" />
       ) : isFavorite ? (
-        <FaHeart />
+        <FaHeart className="text-yellow-500" />
       ) : (
         <FaRegHeart className="text-xs" />
       )}
     </Button>
+  )
+}
+
+export const AddToCartSignInButton = () => {
+  return (
+    <SignInButton mode="modal">
+      <Button type="button" className="capitalize mt-4">
+        Add to cart
+      </Button>
+    </SignInButton>
   )
 }

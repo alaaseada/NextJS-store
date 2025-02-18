@@ -24,7 +24,7 @@ const Hero = () => {
         <div className="mt-10">
           <Button size={'lg'} asChild>
             <Link href={'/products'} className="capitalize tracking-wider">
-              Our products
+              Shop Furniture
             </Link>
           </Button>
         </div>

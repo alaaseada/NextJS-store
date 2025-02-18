@@ -27,7 +27,6 @@ export const deleteImage = async (imageURL: string) => {
   const { data, error } = await supabase.storage
     .from(bucketName)
     .remove([imageName])
-  console.log(data)
   if (error) {
     throw new Error(error.message)
   }

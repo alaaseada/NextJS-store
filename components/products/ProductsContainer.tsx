@@ -25,23 +25,29 @@ const ProductsContainer = async ({
   const products = await fetchAllProducts(searchKey, page)
   const products_count = await getTotalNumberOfFilteredProducts(searchKey)
 
-  const totalPages = Math.ceil(products_count / 6)
+  const totalPages = Math.ceil(products_count / 9)
 
   const searchTerm = searchKey ? `&searchKey=${searchKey}` : ''
   return (
     <>
       <section>
         <div className="flex justify-between">
-          <h2 className="text-xl font-medium tracking-wider capitalize mb-8">
+          <h2 className="text-xl font-medium tracking-wider capitalize mb-6">
             {products_count} {products_count > 1 ? 'products' : 'product'}
           </h2>
           <div className="flex gap-2">
-            <Button variant={layout === 'grid' ? 'default' : 'outline'}>
+            <Button
+              variant={layout === 'grid' ? 'default' : 'outline'}
+              size={'sm'}
+            >
               <Link href={`/products/?layout=grid${searchTerm}`}>
                 <Grid2X2CheckIcon />
               </Link>
             </Button>
-            <Button variant={layout === 'list' ? 'default' : 'outline'}>
+            <Button
+              variant={layout === 'list' ? 'default' : 'outline'}
+              size={'sm'}
+            >
               <Link href={`/products/?layout=list${searchTerm}`}>
                 <ListChecksIcon />
               </Link>

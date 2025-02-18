@@ -3,7 +3,7 @@ import {
   SubmitButton,
   EditButton,
   DeleteButton,
-  ActionButton,
+  DeleteForm,
 } from '@/components/form/Buttons'
 import { default as ImageInput } from '@/components/form/ImageInput'
 import { default as FormContainer } from '@/components/form/FormContainer'
@@ -16,7 +16,7 @@ export {
   SubmitButton,
   EditButton,
   DeleteButton,
-  ActionButton,
+  DeleteForm,
   ImageInput,
   FormContainer,
   TextAreaInput,

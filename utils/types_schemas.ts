@@ -1,4 +1,6 @@
 import { z, ZodSchema } from 'zod'
+import { User } from '@clerk/nextjs/server'
+import React from 'react'
 
 export const IMAGE_SCHEMA = z
   .instanceof(File)
@@ -77,6 +79,27 @@ export type actionFunction = (
   formData: FormData
 ) => Promise<{ message: string }>
 
+export type ReviewCardProps = {
+  reviewInfo: {
+    id: string
+    rating: number
+    feedback: string
+    createdAt: Date
+    name: string
+    image: string
+  }
+  children?: React.ReactNode
+}
+
+export const reviewSchema = z.object({
+  clerkId: z.string(),
+  productId: z.string(),
+  rating: z.coerce.number().int().min(1).max(5),
+  feedback: z.string().max(250),
+})
+
+export type ReviewType = z.infer<typeof reviewSchema>
+
 export type CartItem = {
   productId: string
   image: string
@@ -88,9 +111,19 @@ export type CartItem = {
 
 export type CartState = {
   cartItems: CartItem[]
-  numItemsInCart: number
+  itemsCount: number
   cartTotal: number
   shipping: number
   tax: number
   orderTotal: number
 }
+
+export enum Mode {
+  Product = 'Product',
+  Cart = 'Cart',
+}
+
+import { Prisma } from '@prisma/client/edge'
+export type CartItemWithProduct = Prisma.CartItemGetPayload<{
+  include: { product: true }
+}>

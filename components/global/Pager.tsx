@@ -9,8 +9,7 @@ import {
   PaginationPrevious,
 } from '@/components/ui/pagination'
 import { cn } from '@/lib/utils'
-import { usePathname, useSearchParams, useRouter } from 'next/navigation'
-import { useEffect } from 'react'
+import { usePathname, useSearchParams } from 'next/navigation'
 
 type PagerProps = {
   totalPages: number

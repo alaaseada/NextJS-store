@@ -1,18 +1,34 @@
-import { currentUser } from '@clerk/nextjs/server'
+import { cn } from '@/lib/utils'
+import { currentUser, User } from '@clerk/nextjs/server'
 import { LucideUser2 } from 'lucide-react'
 
-const UserIcon = async () => {
-  const user = await currentUser()
-  const profile_img = user?.imageUrl
+const UserIcon = async ({
+  user,
+  className,
+}: {
+  user?: User
+  className?: string
+}) => {
+  let targetUser = user ? user : await currentUser()
+
+  const profile_img = targetUser?.imageUrl
 
   if (profile_img) {
     return (
-      <img src={profile_img} className="w-6 h-6 rounded-full object-cover" />
+      <img
+        src={profile_img}
+        className={cn('rounded-full object-cover', className)}
+      />
     )
   }
 
   return (
-    <LucideUser2 className="w-6 h-6 object-cover rounded-full bg-primary text-white" />
+    <LucideUser2
+      className={cn(
+        'object-cover rounded-full bg-primary text-white',
+        className
+      )}
+    />
   )
 }
 export default UserIcon

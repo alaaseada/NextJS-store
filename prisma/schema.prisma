@@ -20,13 +20,66 @@ model Product {
   price       Int
   updatedAt   DateTime @db.Date @default(now())
   favorites   Favorite[]
+  reviews     Review[]
+  cartItems   CartItem[]
 }
 
 model Favorite {
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
   clerkId     String
-  product     Product @relation(fields: [productId], references: [id], onDelete: Cascade)
-  productId   String  @db.ObjectId
-  createdAt   DateTime @db.Date @default(now())
-  updatedAt   DateTime @db.Date @default(now())
+  product     Product   @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId   String    @db.ObjectId 
+  createdAt   DateTime  @db.Date @default(now())
+  updatedAt   DateTime  @db.Date @default(now())
+}
+
+model Review {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  clerkId     String
+  rating      Int
+  feedback    String
+  product     Product   @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId   String    @db.ObjectId
+  createdAt   DateTime  @db.Date @default(now())
+  updatedAt   DateTime  @db.Date @default(now())
+}
+
+
+model Cart {
+  id          String    @id  @default(auto()) @map("_id") @db.ObjectId
+  clerkId     String    @unique
+  cartItems   CartItem[]
+  itemsCount  Int       @default(0)
+  taxRate     Float     @default(0.14)
+  tax         Int       @default(0)
+  shipping    Int       @default(5)
+  cartTotal   Int       @default(0)
+  orderTotal  Int       @default(0)
+  createdAt   DateTime  @db.Date @default(now())
+  updatedAt   DateTime  @db.Date @default(now())
+}
+
+
+model CartItem {
+  id          String    @id  @default(auto()) @map("_id") @db.ObjectId
+  cart        Cart      @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  cartId      String    @db.ObjectId 
+  product     Product   @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId   String    @db.ObjectId  @unique
+  amount      Int       
+  createdAt   DateTime  @db.Date @default(now())
+  updatedAt   DateTime  @db.Date @default(now())
+}
+
+model Order {
+  id            String   @id  @default(auto()) @map("_id") @db.ObjectId
+  clerkId       String
+  emailAddress  String
+  products      Int @default(0)
+  tax           Int @default(0)
+  shipping      Int @default(0)
+  orderTotal    Int @default(0)
+  isPaid        Boolean @default(false)
+  createdAt     DateTime @db.Date @default(now())
+  updatedAt     DateTime @db.Date @default(now())
 }

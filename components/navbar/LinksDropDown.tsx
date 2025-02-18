@@ -24,7 +24,7 @@ const LinksDropDown = async () => {
       <DropdownMenuTrigger asChild>
         <Button variant={'outline'} className="flex gap-4 max-w-[100px]">
           <TextAlignLeftIcon className="w-6 h-6" />
-          <UserIcon />
+          <UserIcon className="w-6 h-6" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-40" align="start" sideOffset={10}>

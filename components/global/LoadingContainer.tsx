@@ -4,7 +4,7 @@ import { Skeleton } from '@/components/ui/skeleton'
 
 const LoadingContainer = ({ title }: { title: string }) => {
   return (
-    <section className="pt-24">
+    <section className="pt-8">
       <SectionTitle title={title} />
       <div className="pt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         <ProductCardSkeleton />

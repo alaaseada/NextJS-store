@@ -15,9 +15,8 @@ import {
   getTotalNumberOfProducts,
 } from '@/utils/actions'
 import Link from 'next/link'
-import { ActionButton } from '../form/Buttons'
+import { DeleteButton, DeleteForm, EditButton } from '../form/Buttons'
 import EmptyList from '../global/EmptyList'
-import { FormContainer } from '../form'
 import Pager from '../global/Pager'
 
 const ProductsGridview = async ({ currentPage }: { currentPage: number }) => {
@@ -28,7 +27,7 @@ const ProductsGridview = async ({ currentPage }: { currentPage: number }) => {
     return <EmptyList heading="No products have been added yet!" />
   }
 
-  const totalPages = Math.ceil(totalProducts / 5)
+  const totalPages = Math.ceil(totalProducts / 10)
 
   return (
     <>
@@ -56,11 +55,13 @@ const ProductsGridview = async ({ currentPage }: { currentPage: number }) => {
                 </TableCell>
                 <TableCell>{company}</TableCell>
                 <TableCell>{formatCurrency(price)}</TableCell>
-                <TableCell className="flex gap-2 items-center">
+                <TableCell className="flex gap-4 items-center">
                   <Link href={`/admin/products/${id}/edit`}>
-                    <ActionButton actionType="edit" />
+                    <EditButton id={id} />
                   </Link>
-                  <DeleteButton productId={id} />
+                  <DeleteForm id={id} action={deleteProduct}>
+                    <DeleteButton />
+                  </DeleteForm>
                 </TableCell>
               </TableRow>
             )
@@ -85,12 +86,3 @@ const ProductsGridview = async ({ currentPage }: { currentPage: number }) => {
   )
 }
 export default ProductsGridview
-
-const DeleteButton = ({ productId }: { productId: string }) => {
-  const deleteProductAction = deleteProduct.bind(null, { productId })
-  return (
-    <FormContainer action={deleteProductAction}>
-      <ActionButton actionType="delete" />
-    </FormContainer>
-  )
-}
