@@ -1,14 +1,14 @@
 'use client'
 
 import { useEffect } from 'react'
-import { redirect, useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 
 export default function ClearCartClientComponent() {
   const router = useRouter()
 
   useEffect(() => {
     setTimeout(() => {
-      redirect('/Orders')
+      router.push('/orders')
     }, 5000)
   }, [router])
 
