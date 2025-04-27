@@ -2,9 +2,9 @@ import { redirect } from 'next/navigation'
 import { stripe } from '../../lib/stripe'
 import { prisma } from '@/utils/db'
 import { FaRegCheckCircle, FaHeart } from 'react-icons/fa'
-import { revalidatePath } from 'next/cache'
 import Link from 'next/link'
-import { getCartItemsCount } from '@/utils/actions'
+import { revalidatePath } from 'next/cache'
+import ClearCartClientComponent from '@/components/cart/ClearCartButton'
 
 const Return = async ({
   searchParams,
@@ -38,7 +38,6 @@ const Return = async ({
         },
       })
     }
-    revalidatePath('/')
     return (
       <section id="success" className="text-center">
         <div className="flex flex-col gap-4 items-center justify-center font-light ">
@@ -61,6 +60,7 @@ const Return = async ({
             Thank You for shopping at NextJs Store <FaHeart />
           </p>
         </div>
+        <ClearCartClientComponent />
       </section>
     )
   }
