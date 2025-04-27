@@ -1,7 +1,7 @@
 'use server'
 import { prisma } from '@/utils/db'
 import { redirect } from 'next/navigation'
-import { auth, currentUser } from '@clerk/nextjs/server'
+import { currentUser } from '@clerk/nextjs/server'
 import {
   imageSchema,
   productSchema,
@@ -15,8 +15,6 @@ import { UpdatedProductType } from './types_schemas'
 import { Cart } from '@prisma/client/edge'
 import { headers } from 'next/headers'
 import { stripe } from '@/lib/stripe'
-import { NextResponse } from 'next/server'
-import { error } from 'console'
 
 const getAuthUser = async () => {
   const user = await currentUser()

@@ -4,6 +4,7 @@ import { prisma } from '@/utils/db'
 import { FaRegCheckCircle, FaHeart } from 'react-icons/fa'
 import { revalidatePath } from 'next/cache'
 import Link from 'next/link'
+import { getCartItemsCount } from '@/utils/actions'
 
 const Return = async ({
   searchParams,
@@ -36,8 +37,8 @@ const Return = async ({
           id: cartId,
         },
       })
-      revalidatePath('/')
     }
+    revalidatePath('/')
     return (
       <section id="success" className="text-center">
         <div className="flex flex-col gap-4 items-center justify-center font-light ">
