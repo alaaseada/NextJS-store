@@ -3,8 +3,7 @@ import { stripe } from '../../lib/stripe'
 import { prisma } from '@/utils/db'
 import { FaRegCheckCircle, FaHeart } from 'react-icons/fa'
 import Link from 'next/link'
-import { revalidatePath } from 'next/cache'
-import ClearCartClientComponent from '@/components/cart/ClearCartButton'
+import CartClearClient from '@/components/navbar/CartClearClient'
 
 const Return = async ({
   searchParams,
@@ -32,7 +31,7 @@ const Return = async ({
         where: { id: orderId },
         data: { isPaid: true },
       })
-      await prisma.cart.delete({
+      await prisma.cart.deleteMany({
         where: {
           id: cartId,
         },
@@ -40,6 +39,7 @@ const Return = async ({
     }
     return (
       <section id="success" className="text-center">
+        <CartClearClient />
         <div className="flex flex-col gap-4 items-center justify-center font-light ">
           <FaRegCheckCircle className="text-5xl text-primary" />
           <h2 className="tracking-wider text-3xl">
@@ -60,7 +60,6 @@ const Return = async ({
             Thank You for shopping at NextJs Store <FaHeart />
           </p>
         </div>
-        <ClearCartClientComponent />
       </section>
     )
   }
